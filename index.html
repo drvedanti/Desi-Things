@@ -142,11 +142,14 @@ font-size:20px
 }
 .detail{max-width:850px}
 .back{
-background:none;
-border:0;
-padding:0;
-color:var(--muted);
-margin-bottom:35px
+background:transparent;
+border:1px solid var(--line);
+border-radius:24px;
+padding:9px 16px;
+color:var(--ink);
+margin-bottom:35px;
+font-size:15px;
+font-weight:600
 }
 .pills{
 display:flex;
@@ -502,10 +505,47 @@ placeholder="Example: My Aaji used to dry mango pieces on the terrace every summ
 <div class="field">
 <label>Where was your family from?</label>
 
-<input
-id="place"
-placeholder="City, state, region or community"
->
+<select id="country">
+<option value="">Select country</option>
+<option value="India">India</option>
+</select>
+
+<select id="state">
+<option value="">Select state / region</option>
+<option>Maharashtra</option>
+<option>Gujarat</option>
+<option>Rajasthan</option>
+<option>Punjab</option>
+<option>Haryana</option>
+<option>Uttar Pradesh</option>
+<option>Bihar</option>
+<option>West Bengal</option>
+<option>Assam</option>
+<option>Odisha</option>
+<option>Jharkhand</option>
+<option>Chhattisgarh</option>
+<option>Madhya Pradesh</option>
+<option>Goa</option>
+<option>Karnataka</option>
+<option>Kerala</option>
+<option>Tamil Nadu</option>
+<option>Andhra Pradesh</option>
+<option>Telangana</option>
+<option>Other</option>
+</select>
+
+<select id="city">
+<option value="">Select city / region</option>
+<option>Pune</option>
+<option>Mumbai</option>
+<option>Nagpur</option>
+<option>Nashik</option>
+<option>Ahmednagar</option>
+<option>Kolhapur</option>
+<option>Satara</option>
+<option>Sangli</option>
+<option>Other</option>
+</select>
 </div>
 
 <button class="btn" type="submit">
