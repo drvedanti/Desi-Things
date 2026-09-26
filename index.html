@@ -196,7 +196,7 @@ display:block;
 font-weight:600;
 margin-bottom:7px
 }
-.field input,.field textarea{
+.field input,.field textarea,.field select{
 width:100%;
 padding:13px;
 border:1px solid var(--line);
@@ -204,6 +204,11 @@ border-radius:12px;
 background:var(--card);
 font:inherit
 }
+  .field select{
+margin-top:8px;
+color:var(--ink);
+  }
+  
 .field textarea{min-height:150px}
 .row{
 display:flex;
@@ -512,40 +517,65 @@ placeholder="Example: My Aaji used to dry mango pieces on the terrace every summ
 
 <select id="state">
 <option value="">Select state / region</option>
-<option>Maharashtra</option>
-<option>Gujarat</option>
-<option>Rajasthan</option>
-<option>Punjab</option>
-<option>Haryana</option>
-<option>Uttar Pradesh</option>
-<option>Bihar</option>
-<option>West Bengal</option>
-<option>Assam</option>
-<option>Odisha</option>
-<option>Jharkhand</option>
-<option>Chhattisgarh</option>
-<option>Madhya Pradesh</option>
-<option>Goa</option>
-<option>Karnataka</option>
-<option>Kerala</option>
-<option>Tamil Nadu</option>
-<option>Andhra Pradesh</option>
-<option>Telangana</option>
-<option>Other</option>
 </select>
 
 <select id="city">
 <option value="">Select city / region</option>
-<option>Pune</option>
-<option>Mumbai</option>
-<option>Nagpur</option>
-<option>Nashik</option>
-<option>Ahmednagar</option>
-<option>Kolhapur</option>
-<option>Satara</option>
-<option>Sangli</option>
-<option>Other</option>
 </select>
+
+<script>
+const states = {
+India: {
+Maharashtra:["Pune","Mumbai","Nagpur","Nashik","Kolhapur","Satara","Sangli"],
+Gujarat:["Ahmedabad","Surat","Vadodara","Rajkot"],
+Rajasthan:["Jaipur","Jodhpur","Udaipur","Kota"],
+Karnataka:["Bengaluru","Mysuru","Mangaluru"],
+Kerala:["Kochi","Thiruvananthapuram","Kozhikode"],
+Tamil Nadu:["Chennai","Madurai","Coimbatore"],
+West Bengal:["Kolkata","Siliguri"],
+Assam:["Guwahati","Dibrugarh"],
+Bihar:["Patna","Gaya"],
+Uttar_Pradesh:["Lucknow","Varanasi","Agra","Kanpur"],
+Madhya_Pradesh:["Bhopal","Indore","Jabalpur"],
+Odisha:["Bhubaneswar","Cuttack"],
+Telangana:["Hyderabad"],
+Andhra_Pradesh:["Visakhapatnam","Vijayawada"],
+Goa:["Panaji"],
+Punjab:["Amritsar","Ludhiana"],
+Haryana:["Gurugram","Faridabad"]
+}
+};
+
+const country=document.getElementById("country");
+const state=document.getElementById("state");
+const city=document.getElementById("city");
+
+country.onchange=()=>{
+state.innerHTML='<option value="">Select state / region</option>';
+city.innerHTML='<option value="">Select city / region</option>';
+
+const list=states[country.value]||{};
+Object.keys(list).forEach(s=>{
+const o=document.createElement("option");
+o.value=s;
+o.textContent=s.replace("_"," ");
+state.appendChild(o);
+});
+};
+
+state.onchange=()=>{
+city.innerHTML='<option value="">Select city / region</option>';
+
+const list=(states[country.value]||{})[state.value]||[];
+
+list.forEach(c=>{
+const o=document.createElement("option");
+o.value=c;
+o.textContent=c;
+city.appendChild(o);
+});
+};
+</script>
 </div>
 
 <button class="btn" type="submit">
@@ -564,9 +594,13 @@ function preview(e){
 
 e.preventDefault();
 
-const p =
-document.getElementById("place").value ||
-"Not specified";
+const countryValue=document.getElementById("country").value;
+const stateValue=document.getElementById("state").value;
+const cityValue=document.getElementById("city").value;
+
+const p=[countryValue,stateValue,cityValue]
+.filter(Boolean)
+.join(" · ") || "Not specified";
 
 document.getElementById("out").innerHTML=`
 
